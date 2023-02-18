@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "ChungKhoan";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h1 class="text-center">Chứng khoán</h1>
+
+<!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+    <div id="tradingview_45ebe"></div>
+    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL stock chart</span></a> by TradingView</div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+        new TradingView.widget(
+            {
+                "width": 1500,
+                "height": 800,
+                "symbol": "NASDAQ:AAPL",
+                "interval": "D",
+                "timezone": "Etc/UTC",
+                "theme": "light",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#f1f3f6",
+                "enable_publishing": false,
+                "allow_symbol_change": true,
+                "container_id": "tradingview_45ebe"
+            }
+        );
+    </script>
+</div>
+<!-- TradingView Widget END -->
