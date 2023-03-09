@@ -7,7 +7,7 @@
                         <h5 style="font-size:150%"><a class="nav-link" href="/">SÀN GIAO DỊCH</a></h5>
                     </li>
                     <li class="nav-item">
-                        <h4>@Html.ActionLink("Chứng Khoán","ChungKhoan","App", new { @class = "nav-link" })</h4>
+                        <h4>@Html.ActionLink("Chứng Khoán", "ChungKhoan", "App", new { @class = "nav-link" })</h4>
                     </li>
                     <li class="nav-item">
                         <h4>@Html.ActionLink("Vàng", "Vang", "App", new { @class = "nav-link" })</h4>
@@ -18,15 +18,38 @@
                 </ul>
 
                 <ul class="navbar-nav ml-auto" style="position: absolute;right: 50px">
-                    <li class="nav-item">
-                        <h4>@Html.ActionLink("Đăng nhập ", "Login", "App", new { @class = "nav-link" })</h4>
-                    </li>
-                    <li class="nav-item">
-                        <h4>@Html.ActionLink("Đăng kí ", "SignIn", "App", new { @class = "nav-link" })</h4>
-                    </li>
-                    <li>
-                        <a href="/"><button type="button" class="btn btn-warning"><h4>Nạp tiền</h4></button></a>
-                    </li>
+
+                    
+                    @{if (Session["UserName"] == null)
+                        {
+                            <li class="nav-item">
+                                <h4>@Html.ActionLink("Đăng nhập ", "Login", "App", new { @class = "nav-link" })</h4>
+                            </li>
+                            <li class="nav-item">
+                                <h4>@Html.ActionLink("Đăng kí ", "SignUp", "App", new { @class = "nav-link" })</h4>
+                            </li>
+                            <li>
+                                <a href="/"><button type="button" class="btn btn-warning"><h4>Nạp tiền</h4></button></a>
+                            </li>
+                      }
+                        else
+                        {
+                            <li class="nav-item">
+                                <h4  style="color:white">Xin chào @Session["UserName"]</h4>
+                            </li>
+                            <li class="nav-item">
+                                <h4>@Html.ActionLink("Đăng xuất","LogOut", "App", new { @class = "nav-link" })</h4>
+                            </li>
+                            <li>
+                                <a href="/"><button type="button" class="btn btn-warning"><h4>Nạp tiền</h4></button></a>
+                            </li>
+                        }
+
+                    }
+
+
+
+
                 </ul>
             </div>
 
@@ -35,3 +58,4 @@
 
     </nav>
 
+</nav>

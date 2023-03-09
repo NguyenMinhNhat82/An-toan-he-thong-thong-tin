@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6095e53e53bc43b78b9247bbf56a826c" Name="Diagram1">
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.CoPhieu" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.GiaoDichCoPhieu" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.GiaoDIchVang" Width="1.5" PointX="6" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.HinhAnhNhaDat" Width="1.5" PointX="5.25" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.LenhGiaoDich" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.NguoiDung" Width="1.5" PointX="0.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.NhaDat" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.TiemVang" Width="1.5" PointX="1.5" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.TheLoai" Width="1.5" PointX="0.75" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.User_CoPhieu" Width="1.5" PointX="6" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UngDungGiaoDichModel.Vang" Width="1.5" PointX="3.75" PointY="16.5" IsExpanded="true" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_LenhGiaoDich_CoPhieu" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_User_CoPhieu_CoPhieu" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_GiaoDichCoPhieu_LenhGiaoDich" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_GiaoDichCoPhieu_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_GiaoDIchVang_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_GiaoDIchVang_Vang" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_HinhAnhNhaDat_NhaDat" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_LenhGiaoDich_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_NhaDat_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_User_CoPhieu_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_NhaDat_TheLoai" ManuallyRouted="false" />
+        <AssociationConnector Association="UngDungGiaoDichModel.FK_Vang_TiemVang" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

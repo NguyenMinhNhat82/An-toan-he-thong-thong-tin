@@ -1,15 +1,115 @@
-﻿
+﻿@model IEnumerable<UngDungGiaoDich.Models.CoPhieu>
+@using UngDungGiaoDich.Models;
+@using System.Data.SqlClient;
+
 @{
     ViewBag.Title = "ChungKhoan";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    SqlDataReader dr;
+    string strConnect = "Data Source=DESKTOP-FSP9BUJ;Initial Catalog=UngDungGiaoDich;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework";
+    SqlConnection cnn = new SqlConnection(strConnect);
+    SqlCommand cmd = new SqlCommand();
+    cmd.CommandType = System.Data.CommandType.Text;
+    cmd.Connection = cnn;
+    if (cnn.State == System.Data.ConnectionState.Closed)
+    {
+        cnn.Open();
+    }
+    List<System.Data.DataTable> List(string TheLoai, string sapxep)
+    {
+        if (cnn.State == System.Data.ConnectionState.Closed)
+        {
+            cnn.Open();
+        }
+        List<System.Data.DataTable> list = new List<System.Data.DataTable>();
+        cmd.CommandText = "select Count(*) from UngDungGiaoDich.dbo.CoPhieu";
+        cmd.Connection = cnn;
+        var soLuongCoPhieu = cmd.ExecuteScalar();
+        for (int i = 0; i < (int)soLuongCoPhieu; i++)
+        {
+            cmd.CommandText = "select top 4 Gia,Tong = SUM(TongSoCoPhieu),IdCoPhieu from LenhGiaoDich where TheLoai = '" + TheLoai + "' and IdCoPhieu =" + (i + 1) + " and KetQua = 'False' group by Gia,IdCoPhieu order by Gia " + sapxep;
+            dr = cmd.ExecuteReader();
+
+            var table = new System.Data.DataTable();
+            table.Columns.Add("Gia");
+            table.Columns.Add("TongCoPhieu");
+            table.Columns.Add("IdCoPhieu");
+            int dem = 0;
+            while (dr.Read())
+            {
+                table.Rows.Add(dr["Gia"], dr["Tong"], dr["IdCoPhieu"]);
+                dem++;
+            }
+            dr.Close();
+            var rowNull = 4 - dem;
+            for (int j = 0; j < rowNull; j++)
+            {
+                table.Rows.Add(null, null, null);
+            }
+
+            list.Add(table);
+        }
+        return list;
+    }
+    cnn.Close();
 }
+<script>
+    window.onload = function () {
+                var a = []
+            @foreach (var i in Model) {
+                @:a.push('@i.Ten.Trim()');
+            }
+            var item = [];
+            item.push("close")
+            item.push("high")
+            item.push("low")
+        for (var i in a) {
+            var closeItem = document.getElementById(a[i] + item[0]);
 
+            for (let j = 1; j < 3; j++) {
+                var str = a[i] + item[j]
+                var itemX = document.getElementById(str);
+                if (Number(closeItem.innerText) > Number(itemX.innerText))
+                    itemX.classList.add("text-danger")
+                if (Number(closeItem.innerText) < Number(itemX.innerText))
+                    itemX.classList.add("text-success")              
+            }
+        }
+        for (var i = 0; i < a.length; i++) {
+            var closeI = document.getElementById(a[i] + 'close');
+
+            var ban =[]
+            ban.push(document.getElementById("GiaBan_0_" + (i + 1)))
+            ban.push(document.getElementById("GiaBan_1_" + (i + 1)))
+            ban.push(document.getElementById("GiaBan_2_" + (i + 1)))
+           
+            mua = []
+            mua.push(document.getElementById("GiaMua_1_" + (i + 1)))
+            mua.push(document.getElementById("GiaMua_2_" + (i + 1)))
+            mua.push(document.getElementById("GiaMua_3_" + (i + 1)))
+           
+
+            var KL = document.getElementById("KL"+(i+1))
+            if (Number(closeI.innerText) > parseInt(KL.innerText))
+                KL.classList.add("text-danger")
+            if (Number(closeI.innerText) < parseInt(KL.innerText))
+                KL.classList.add("text-success")
+            for (var j = 0; j < 3; j++) {
+                if (Number(closeI.innerText) > parseInt(ban[j].innerText))
+                    ban[j].classList.add("text-danger")
+                if (Number(closeI.innerText) < parseInt(ban[j].innerText))
+                    ban[j].classList.add("text-success")
+                if (Number(closeI.innerText) > parseInt(mua[j].innerText))
+                    mua[j].classList.add("text-danger")
+                if (Number(closeI.innerText) < parseInt(mua[j].innerText))
+                    mua[j].classList.add("text-success")
+            }
+        }      
+    }
+</script>
 <h1 class="text-center">Chứng khoán</h1>
-
-<!-- TradingView Widget BEGIN -->
 <div class="tradingview-widget-container">
     <div id="tradingview_45ebe"></div>
-    <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL stock chart</span></a> by TradingView</div>
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <script type="text/javascript">
         new TradingView.widget(
@@ -30,7 +130,102 @@
         );
     </script>
 </div>
+<h1>@ViewBag.Count</h1>
+<table class="table table-bordered" style="background-color: black; color: white">
+    <thead>
+        <tr>
+            <th class="text-center" scope="col" rowspan="2">Mã CK</th>
+            <th class="text-center" scope="col" rowspan="2">TC</th>
+            <th class="text-center" scope="col" rowspan="2">Trần</th>
+            <th class="text-center" scope="col" rowspan="2">Sàn</th>
+            <th class="text-center" scope="col" colspan="3">Khớp lệnh</th>
+            <th class="text-center" scope="col" colspan="6">Bên mua</th>
+            <th class="text-center" scope="col" colspan="6">Bên bán</th>
+        </tr>
+        <tr>
+            <th scope="col">Giá</th>
+            <th scope="col">KL</th>
+            <th scope="col">+/-</th>
+            <th scope="col">Giá 1</th>
+            <th scope="col">KL1</th>
+            <th scope="col">Giá 2</th>
+            <th scope="col">KL2</th>
+            <th scope="col">Giá 3</th>
+            <th scope="col">KL3</th>
+            <th scope="col">Giá 1</th>
+            <th scope="col">KL1</th>
+            <th scope="col">Giá 2</th>
+            <th scope="col">KL2</th>
+            <th scope="col">Giá 3</th>
+            <th scope="col">KL3</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{var demID = 0;}
+        @{ foreach (var item in Model)
+            {
+                demID++;
+                <tr>
+                    <th scope="row" class="name">@item.Ten</th>
+                    <td>
+                        <h6 id="@String.Concat(item.Ten.Trim(), "close")">@item.GiaClose</h6>
+                    </td>
+                    <td>
+                        <h6 id="@String.Concat(item.Ten.Trim(), "high")" onload="compare('@item.Ten.Trim()','@String.Concat(item.Ten.Trim(), "high")')">@item.GiaHigh</h6>
+                    </td>
+                    <td>
+                        <h6 id="@String.Concat(item.Ten.Trim(), "low")">@item.GiaLow</h6>
+                    </td>
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        if (i == 0)
+                        {
+                            if (List("Mua", "desc")[demID - 1].Rows[i] != null)
+                            {
+
+                                <td id="@String.Concat("KL",demID)">@List("Mua", "desc")[demID - 1].Rows[i][0]</td>
+                                <td>@List("Mua", "desc")[demID - 1].Rows[i][1]</td>
+                                <td>***</td>
+                            }
+                            else
+                            {
+                                <td>-</td>
+                            }
+                        }
+                        else
+                        {
+                            if (List("Mua", "desc")[demID - 1].Rows[i] != null)
+                            {
+                                <td id="@String.Concat("GiaMua_",i,"_",demID)">@List("Mua", "desc")[demID - 1].Rows[i][0]</td>
+                                <td>@List("Mua", "desc")[demID - 1].Rows[i][1]</td>
+                            }
+                            else
+                            {
+                                <td>-</td>
+                            }
+                        }
+                    }                                    
+                    @for (int i = 0; i < 3; i++)
+                    {                      
+                            if (List("Bán", "asc")[demID - 1].Rows[i] != null)
+                            {
+
+                                <td id="@String.Concat("GiaBan_",i,"_",demID)">@List("Bán", "asc")[demID - 1].Rows[i][0]</td>
+                                <td>@List("Bán", "asc")[demID - 1].Rows[i][1]</td>
+                            }
+                            else
+                            {
+                                <td>-</td>
+                            }
+                        
+                    }                   
+                </tr>
+            }
+        }
+    </tbody>
+</table>
 <li>
-    <a href="/"><button type="button" class="btn btn-warning text-center" style="width:300px;height:100px;margin-left:40%"><h4>Đến sàn giao dịch<br />Chứng khoán</h4></button></a>
+    <button type="button" class="btn btn-warning">@Html.ActionLink("Đặt lệnh", "DatLenh", "App", new { @class = "btn btn-warning" })</button>
 </li>
+
 <!-- TradingView Widget END -->

@@ -1,0 +1,67 @@
+﻿@model UngDungGiaoDich.Models.LenhGiaoDich
+
+@{
+    ViewBag.Title = "DatLenh";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<h2 class="text-center">ĐẶT LỆNH</h2>
+<h3 class="text-center text-danger">@ViewBag.erro</h3>
+@ViewBag.Succes
+@using (Html.BeginForm("DatLenh", "App", FormMethod.Post))
+{
+
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3" style="width:80%;margin-inline:auto;border:2px">
+        <div class="form-control">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gia, htmlAttributes: new { @class = "control-label col-md-2 " })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Gia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Gia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TongSoCoPhieu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TongSoCoPhieu, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TongSoCoPhieu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TheLoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TheLoai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TheLoai, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TenCoPhieu, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TenCoPhieu, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.TenCoPhieu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+
+            <div class="form-outline form-white mb-4">
+                <div class="col-md-offset-2 ">
+                    <input type="submit" value="Đặt lệnh" class="btn btn-default" style="color:black;border: 1px solid" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
